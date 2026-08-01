@@ -57,7 +57,11 @@ export default function WidgetBoard() {
         onLayoutChange={setLayout}
         gridConfig={gridConfig}
         resizeConfig={{ handles: ["se", "e", "s"] }}
-        compactor={noCompactor}
+        compactor={{
+          ...noCompactor,
+          allowOverlap: false,    // Переопределяем: накладывать элементы нельзя
+          preventCollision: true  // Переопределяем: толкать элементы нельзя
+        }}
       >
         {layout.map((item) => (
           <div key={item.i} className="tile">
