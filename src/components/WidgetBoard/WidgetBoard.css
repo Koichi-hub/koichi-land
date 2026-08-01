@@ -1,0 +1,60 @@
+.snapgrid {
+  height: 100% !important;
+  position: relative; /* обязательно для абсолютного позиционирования тайлов внутри */
+}
+
+.widget-container {
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    background-color: #211e1a;
+    background-image: radial-gradient(#3a352e 1px, transparent 1px);
+    background-size: 16px 16px;
+    overflow: hidden;
+}
+
+.tile {
+    display: flex;
+    background-color: #1c1a17;
+    border-radius: 9px;
+    border: 1px solid #3a352e;
+    color: #e8e4de;
+    padding: .6rem .7rem;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.snapgrid-placeholder {
+    border: 1px dashed #ea7a47!important;
+    border-radius: 9px!important;
+    background: rgba(234,122,71,0.14)!important
+}
+
+.snapgrid-resize-handle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    cursor: nwse-resize;
+    touch-action: none;
+    z-index: 4;
+    bottom: -7px;
+    right: -7px;
+    color: white;
+}
+
+.snapgrid-resize-handle--se:after { 
+    content: "";
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid #9e978e;
+    border-bottom: 2px solid #9e978e;
+    border-bottom-right-radius: 2px;
+    transition: border-color .12s ease;
+}
+
+.snapgrid-item:hover .snapgrid-resize-handle--se:after { 
+    border-color: #ea7a47;
+}
