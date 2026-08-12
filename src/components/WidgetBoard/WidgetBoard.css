@@ -24,13 +24,13 @@
     box-sizing: border-box;
 }
 
-.snapgrid-placeholder {
+.widget-container .snapgrid-placeholder {
     border: 1px dashed #ea7a47!important;
     border-radius: 9px!important;
     background: rgba(234,122,71,0.14)!important
 }
 
-.snapgrid-resize-handle {
+.widget-container .snapgrid-resize-handle {
     position: absolute;
     width: 14px;
     height: 14px;
@@ -42,7 +42,7 @@
     color: white;
 }
 
-.snapgrid-resize-handle--se:after { 
+.widget-container .snapgrid-resize-handle--se:after { 
     content: "";
     position: absolute;
     right: 5px;
@@ -55,6 +55,6 @@
     transition: border-color .12s ease;
 }
 
-.snapgrid-item:hover .snapgrid-resize-handle--se:after { 
+.widget-container .snapgrid-item:hover .snapgrid-resize-handle--se:after { 
     border-color: #ea7a47;
 }

@@ -50,3 +50,26 @@
     border-radius: 9px;
     border: 1px solid #3a352e;
 }
+
+.apps-board {
+    width: 600px;
+    height: 600px;
+    overflow: hidden;
+}
+
+.apps-board-tile {
+    display: flex;
+    background-color: #1c1a17;
+    border-radius: 100%;
+    border: 1px solid #3a352e;
+    color: #e8e4de;
+    padding: .6rem .7rem;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.apps-board .snapgrid-placeholder {
+    border: unset!important;
+    border-radius: 100%!important;
+    background-color: unset!important;
+}

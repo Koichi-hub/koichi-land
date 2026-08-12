@@ -1,8 +1,9 @@
 import './Panel.css'
 import appsIcon from '../../assets/icons/apps.svg'
-import { forwardRef, useRef, useState, type Ref } from 'react'
+import { forwardRef, useMemo, useRef, useState, type Ref } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 import { useClickAway } from 'react-use';
+import { GridLayout, type Layout } from '@snapgridjs/react';
 
 export default function Panel() {
     const [showModal, setShowModal] = useState(false);
@@ -47,12 +48,48 @@ function AppsModal({show, showModalBtnRef, onClickOutside}: AppsModalProps) {
                 transition={{ duration: 0.2 }} // Настройка плавности
             >
                 <div className='apps-modal-content'>
-
+                    <AppsBoard />
                 </div>
             </motion.div>
             }
         </AnimatePresence>
     );
+}
+
+const AppsBoard = () => {
+    const [layout, setLayout] = useState<Layout>([
+        { i: "a", x: 0, y: 0, w: 1, h: 1 },
+        { i: "b", x: 1, y: 0, w: 1, h: 1 },
+        { i: "c", x: 2, y: 0, w: 1, h: 1 },
+    ]);
+
+    const gridWidth = 600;
+    const columnsCount = 10;
+    const gapSize = 6;
+    const calculatedRowHeight = (gridWidth - gapSize * (columnsCount + 1)) / columnsCount;
+
+    const gridConfig = useMemo(() => ({
+        cols: columnsCount, 
+        rowHeight: calculatedRowHeight, 
+        margin: [gapSize, gapSize] as [number, number],
+    }), []);
+    
+    return (
+        <div className='apps-board'>
+            <GridLayout
+                layout={layout}
+                width={gridWidth}
+                onLayoutChange={setLayout}
+                gridConfig={gridConfig}
+                resizeConfig={{ handles: ["se", "e", "s"] }}
+            >
+                {layout.map((item) => (
+                    <div key={item.i} className="apps-board-tile">
+                    </div>
+                ))}
+            </GridLayout>
+        </div>
+    )
 }
 
 type PanelButtonProps = {
