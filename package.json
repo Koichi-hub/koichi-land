@@ -12,6 +12,7 @@
   "dependencies": {
     "@dnd-kit/dom": "^0.4.0",
     "@dnd-kit/react": "^0.4.0",
+    "@snapgridjs/extras": "^0.10.0",
     "@snapgridjs/react": "^0.9.1",
     "framer-motion": "^13.0.0",
     "react": "^19.2.7",

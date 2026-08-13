@@ -4,6 +4,7 @@ import { forwardRef, useCallback, useMemo, useRef, useState, type Ref } from 're
 import { AnimatePresence, motion } from 'framer-motion';
 import { useClickAway } from 'react-use';
 import { GridLayout, type Layout } from '@snapgridjs/react';
+import { gravityCompactor } from '@snapgridjs/extras';
 
 export default function Panel() {
     const [showModal, setShowModal] = useState(false);
@@ -88,6 +89,7 @@ const AppsBoard = () => {
                 width={gridWidth}
                 onLayoutChange={onLayoutChange}
                 gridConfig={gridConfig}
+                compactor={gravityCompactor}
                 resizeConfig={{ handles: ["se", "e", "s"] }}
             >
                 {layout.map((item) => (
