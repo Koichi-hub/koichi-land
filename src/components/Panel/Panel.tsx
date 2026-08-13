@@ -1,6 +1,6 @@
 import './Panel.css'
 import appsIcon from '../../assets/icons/apps.svg'
-import { forwardRef, useMemo, useRef, useState, type Ref } from 'react'
+import { forwardRef, useCallback, useMemo, useRef, useState, type Ref } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 import { useClickAway } from 'react-use';
 import { GridLayout, type Layout } from '@snapgridjs/react';
@@ -73,13 +73,20 @@ const AppsBoard = () => {
         rowHeight: calculatedRowHeight, 
         margin: [gapSize, gapSize] as [number, number],
     }), []);
+
+    const onLayoutChange = useCallback((nextLayout: Layout) => {
+        // При переносе элемента на другую сетку ничего не меняем
+        if (nextLayout.length < layout.length) return;
+        
+        setLayout(nextLayout);
+    }, [setLayout]);
     
     return (
         <div className='apps-board'>
             <GridLayout
                 layout={layout}
                 width={gridWidth}
-                onLayoutChange={setLayout}
+                onLayoutChange={onLayoutChange}
                 gridConfig={gridConfig}
                 resizeConfig={{ handles: ["se", "e", "s"] }}
             >
