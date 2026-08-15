@@ -1,10 +1,11 @@
 import { GridLayout, noCompactor, useContainerWidth, type Layout, type LayoutItem } from '@snapgridjs/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './WidgetBoard.css';
+import useWidgetPositions from '../../hooks/useWidgetPositions';
 
 export default function WidgetBoard() {
     const { width, containerRef: snapgridContainerRef } = useContainerWidth();
-    const [layout, setLayout] = useState<Layout>([
+    const [layout, setLayout] = useWidgetPositions("widgetBoardLayout", [
         { i: "a1", x: 0, y: 0, w: 4, h: 2 },
         { i: "b1", x: 4, y: 0, w: 4, h: 2 },
         { i: "c1", x: 8, y: 0, w: 4, h: 2 },
@@ -77,12 +78,19 @@ export default function WidgetBoard() {
                     preventCollision: true  // Переопределяем: толкать элементы нельзя
                 }}
             >
-                {layout.map((item) => (
-                    <div key={item.i} className="tile">
-                        {item.i}
-                    </div>
-                ))}
+                {layout.map((item) => <WidgetTile i={item.i} key={item.i} />)}
             </GridLayout>
         </div>
     );
+}
+
+type WidgetTileProps = {
+    i: string;
+}
+const WidgetTile = ({i}: WidgetTileProps) => {
+    return (
+        <div className="tile">
+            {i}
+        </div>
+    )
 }
