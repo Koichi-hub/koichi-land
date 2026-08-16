@@ -2,7 +2,13 @@ import { GridLayout, noCompactor, useContainerWidth, type Layout, type LayoutIte
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './WidgetBoard.css';
 import useWidgetPositions from '../../hooks/useWidgetPositions';
+import ContextMenu from '../ContextMenu/ContextMenu';
 
+type MenuState = {
+    x: number;
+    y: number;
+    tileId: string;
+} | null;
 export default function WidgetBoard() {
     const { width, containerRef: snapgridContainerRef } = useContainerWidth();
     const [layout, setLayout] = useWidgetPositions("widgetBoardLayout", [
@@ -10,6 +16,8 @@ export default function WidgetBoard() {
         { i: "b1", x: 4, y: 0, w: 4, h: 2 },
         { i: "c1", x: 8, y: 0, w: 4, h: 2 },
     ]);
+    
+    const [menu, setMenu] = useState<MenuState>(null);
 
     const [containerHeight, setContainerHeight] = useState(0);
     const localRef = useRef<HTMLDivElement | null>(null);
@@ -78,18 +86,36 @@ export default function WidgetBoard() {
                     preventCollision: true  // Переопределяем: толкать элементы нельзя
                 }}
             >
-                {layout.map((item) => <WidgetTile i={item.i} key={item.i} />)}
+                {layout.map((item) => <WidgetTile i={item.i} key={item.i} onOpenMenu={(x, y) => setMenu({ x, y, tileId: item.i })} />)}
             </GridLayout>
+
+            {/* Рендерим меню, если оно активно */}
+            {menu && (
+                <ContextMenu
+                    x={menu.x}
+                    y={menu.y}
+                    tileId={menu.tileId}
+                    onClose={() => setMenu(null)}
+                />
+            )}
         </div>
     );
 }
 
 type WidgetTileProps = {
     i: string;
+    onOpenMenu: (x: number, y: number) => void;
 }
-const WidgetTile = ({i}: WidgetTileProps) => {
+const WidgetTile = ({ i, onOpenMenu }: WidgetTileProps) => {
+    const handleContextMenu = (e: any) => {
+        e.preventDefault();
+        e.stopPropagation(); // Железно глушим всплытие, чтобы @snapgridjs не дергался
+
+        onOpenMenu(e.clientX, e.clientY);
+    };
+
     return (
-        <div className="tile">
+        <div className="tile" onContextMenu={handleContextMenu}>
             {i}
         </div>
     )
